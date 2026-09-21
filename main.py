@@ -1,3 +1,5 @@
+from database.database import Database
+
 from student_system.student_menu import StudentMenu
 from admin_system.admin_menu import AdminMenu
 
@@ -6,6 +8,7 @@ from utils.constants import MainInputConstants
 
 def main():
     # Init db
+    database = Database(filename="students.data")
 
     # Init controllers
 

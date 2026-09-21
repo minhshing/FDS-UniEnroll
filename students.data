@@ -1,0 +1,15 @@
+[
+  {
+    "email": "test@gmail.com",
+    "password": "1234",
+    "id": "000001",
+    "name": "Minh Nguyen",
+    "subjects": [
+      {
+        "id": "001",
+        "mark": 50,
+        "grade": "P"
+      }
+    ]
+  }
+]
