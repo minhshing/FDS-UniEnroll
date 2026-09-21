@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from utils.exception import (CreateDatabaseFileError,
+from utils.exception.database import (CreateDatabaseFileError,
                              LoadStudentDataError,
                              CreateStudentError,
                              UpdateStudentError,
@@ -10,6 +10,7 @@ from utils.exception import (CreateDatabaseFileError,
                              DeleteStudentError,
                              DeleteAllStudentsError,
                              SaveStudentsError)
+
 
 class Database:
     students = []
@@ -49,6 +50,9 @@ class Database:
         except Exception as e:
             print("error creating student: " + str(e))
             raise CreateStudentError
+
+    def get_all_students(self):
+        return self.students
 
     def get_student_by_id(self, id):
         try:
@@ -103,5 +107,3 @@ class Database:
         except Exception as e:
             print("error deleting all students: " + str(e))
             raise DeleteAllStudentsError
-
-

@@ -1,4 +1,3 @@
-# database
 class CreateDatabaseFileError(Exception):
     pass
 

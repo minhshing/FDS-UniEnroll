@@ -1,5 +1,8 @@
 from database.database import Database
 
+from admin_system.admin_controller import AdminController
+from student_system.student_controller import StudentController
+
 from student_system.student_menu import StudentMenu
 from admin_system.admin_menu import AdminMenu
 
@@ -11,10 +14,12 @@ def main():
     database = Database(filename="students.data")
 
     # Init controllers
+    student_controller = StudentController()
+    admin_controller = AdminController(database)
 
     # Init menus
-    student_menu = StudentMenu()
-    admin_menu = AdminMenu()
+    student_menu = StudentMenu(student_controller)
+    admin_menu = AdminMenu(admin_controller)
 
     # Main loop
     while True:

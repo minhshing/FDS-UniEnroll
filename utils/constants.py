@@ -16,3 +16,20 @@ class AdminMenuInputConstants:
     INPUT_REMOVE_STUDENT = "r"
     INPUT_SHOW = "s"
     INPUT_EXIT = "x"
+
+# Mark threshold
+class MarkThresholdConstants:
+    Z_NUMBER = 50
+    P_NUMBER = 65
+    C_NUMBER = 75
+    D_NUMBER = 85
+    HD_NUMBER = 100
+
+    Z_STRING = "Z"
+    P_STRING = "P"
+    C_STRING = "C"
+    D_STRING = "D"
+    HD_STRING = "HD"
+
+class PassThresholdConstants:
+    PASS = 50

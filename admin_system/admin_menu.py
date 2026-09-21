@@ -1,22 +1,25 @@
+from admin_system.admin_controller import AdminController
+
 from utils.constants import AdminMenuInputConstants
 
 class AdminMenu:
-    def __init__(self):
-        pass
+    def __init__(self, controller: AdminController):
+        self.controller = controller
 
     def run(self):
         while True:
             user_input = input("Admin System (c/g/p/r/s/x): ")
             if user_input == AdminMenuInputConstants.INPUT_CLEAR_DATABASE:
-                print("clear db")
+                self.controller.clear_database()
             elif user_input == AdminMenuInputConstants.INPUT_GROUP_STUDENTS:
-                print("group students")
+                self.controller.group_students()
             elif user_input == AdminMenuInputConstants.INPUT_PARTITION_STUDENTS:
-                print("partition students")
+                self.controller.partition_student()
             elif user_input == AdminMenuInputConstants.INPUT_REMOVE_STUDENT:
-                print("remove student")
+                student_id = input("REMOVE BY ID: ")
+                self.controller.remove_student(student_id)
             elif user_input == AdminMenuInputConstants.INPUT_SHOW:
-                print("show")
+                self.controller.show_students()
             elif user_input == AdminMenuInputConstants.INPUT_EXIT:
                 break
             else:
