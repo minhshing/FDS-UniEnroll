@@ -23,4 +23,5 @@ class Student:
             student_data["email"],
             student_data["password"],
             student_data["subjects"],
+        )
         
