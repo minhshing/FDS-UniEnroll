@@ -2,19 +2,17 @@ import random
 import re
 
 from models.student import Student
+from utils.constants import StudentIdConstants, StudentValidationConstants
 from utils.exception.database import CreateStudentError
 
 
 class StudentController:
-    EMAIL_PATTERN = r"^[a-zA-Z]+\.[a-zA-Z]+@university\.com$"
-    PASSWORD_PATTERN = r"^[A-Z][a-zA-Z]{5,}[0-9]{3,}$"
-
     def __init__(self, database):
         self.database = database
 
     def is_valid_credentials(self, email, password):
-        email_is_valid = re.match(self.EMAIL_PATTERN, email) is not None
-        password_is_valid = re.match(self.PASSWORD_PATTERN, password) is not None
+        email_is_valid = re.match(StudentValidationConstants.EMAIL_PATTERN, email) is not None
+        password_is_valid = re.match(StudentValidationConstants.PASSWORD_PATTERN, password) is not None
         return email_is_valid and password_is_valid
 
     def ask_for_valid_credentials(self):
@@ -30,7 +28,7 @@ class StudentController:
 
     def generate_unique_id(self):
         while True:
-            student_id = f"{random.randint(1, 999999):06d}"
+            student_id = f"{random.randint(StudentIdConstants.ID_MIN, StudentIdConstants.ID_MAX):0{StudentIdConstants.ID_LENGTH}d}"
             if self.database.get_student_by_id(student_id) is None:
                 return student_id
 
