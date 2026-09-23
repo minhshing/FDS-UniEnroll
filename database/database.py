@@ -13,9 +13,11 @@ from utils.exception.database import (CreateDatabaseFileError,
 
 
 class Database:
-    students = []
+    #Minh's Prev code
+    # students = []
 
     def __init__(self, filename):
+        self.students = [] #Rafeed's new code
         self.file = Path(filename)
 
         if not self.file.exists():
@@ -27,6 +29,7 @@ class Database:
 
         # load students
         try:
+            
             with self.file.open("r", encoding="utf-8") as student_data:
                 records = json.load(student_data)
 
@@ -38,7 +41,10 @@ class Database:
 
     def save_students(self):
         try:
-            self.file.write_text(json.dumps(self.students), encoding="utf-8")
+            #Minh's Prev code : the file becomes one unreadable line
+            # self.file.write_text(json.dumps(self.students), encoding="utf-8")
+            #Rafeed's new code
+            self.file.write_text(json.dumps(self.students, indent=2), encoding="utf-8")
         except Exception as e:
             print("error saving students: " + str(e))
             raise SaveStudentsError
@@ -75,12 +81,25 @@ class Database:
         except Exception as e:
             print("error getting student by email: " + str(e))
             raise GetStudentByEmailError
+    #Minh's old code
+    # def update_student(self, id, student):
+    #     try:
+    #         for index, student in enumerate(self.students):
+    #             if student["id"] == id:
+    #                 self.students[index] = student
+    #                 break
 
-    def update_student(self, id, student):
+    #         self.save_students()
+    #     except Exception as e:
+    #         print("error updating student: " + str(e))
+    #         raise UpdateStudentError
+    #Rafeeds new code:
+    def update_student(self, id, updated_student):
+
         try:
-            for index, student in enumerate(self.students):
-                if student["id"] == id:
-                    self.students[index] = student
+            for index, existing_student in enumerate(self.students):
+                if existing_student["id"] == id:
+                    self.students[index] = updated_student
                     break
 
             self.save_students()
