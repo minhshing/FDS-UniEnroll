@@ -35,7 +35,7 @@ class LoginWindow(tk.Tk):
 
         self.build_widgets()
 
-    def build_widget(self):
+    def build_widgets(self):
         # create everything the user sees in this window
         heading = tk.Label(self, text="GUIUniApp",font = ("Arial",16))
         heading.pack(pady=(15,5))
