@@ -10,7 +10,7 @@ import tkinter as tk
 
 from models.student import Student
 from gui_system.exception_window import ExceptionWindow
-from gui_system.exception_window import EnrolmentWindow
+from gui_system.enrolment_window import EnrolmentWindow
 from utils.constants import StudentValidationConstants
 
 
@@ -132,6 +132,6 @@ class LoginWindow(tk.TK):
         # hide the login window and open the enrolment window.
         self.withdraw()
         EnrolmentWindow(self,student,self.database)
-        
+
 #Login worked. the database gives us a dictionary, so turn it
         #into a Student object before passing it on.
