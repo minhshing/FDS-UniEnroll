@@ -21,18 +21,31 @@ def pad_id(number): #suppose a number 54 is converted to a 3 digit text id like 
 # mark < 50 is Z, mark 50 to <65 is P, mark 65 to below 75 is C, mark 75 to 85 is D, mark 85 or more is HD
 # the mark can be a whole number relating to one subject or a decimal, (like the avg mark)
 
+from utils.constants import MarkThresholdConstants
+
+
 def calculate_grade(mark):
-    if mark >= 85:
-        return "HD"
-    elif mark >= 75:
-        return "D"
-    elif mark >= 65:
-        return "C"
-    elif mark >= 50:
-        return "P"
-    
+    """Work out the grade letter for a mark.
+
+    Uses the grade bands from utils/constants.py, so the CLI, the GUI
+    and the admin system all share one grading table.
+
+    Each constant is the upper limit of its band, for example
+    Z_NUMBER is 50, so any mark below 50 is a Z.
+
+    The mark can be a whole number (one subject) or a decimal
+    (a student's average mark).
+    """
+    if mark < MarkThresholdConstants.Z_NUMBER:
+        return MarkThresholdConstants.Z_STRING
+    elif mark < MarkThresholdConstants.P_NUMBER:
+        return MarkThresholdConstants.P_STRING
+    elif mark < MarkThresholdConstants.C_NUMBER:
+        return MarkThresholdConstants.C_STRING
+    elif mark < MarkThresholdConstants.D_NUMBER:
+        return MarkThresholdConstants.D_STRING
     else:
-        return "Z"
+        return MarkThresholdConstants.HD_STRING
 
 # -> making a random 3 digit id that is not already used
 # existing_ids is a list of ids the student already has, for ex: having subjects ['231','324']
