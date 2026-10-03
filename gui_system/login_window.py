@@ -14,7 +14,7 @@ from gui_system.enrolment_window import EnrolmentWindow
 from utils.constants import StudentValidationConstants
 
 
-class LoginWindow(tk.TK):
+class LoginWindow(tk.Tk):
     # the main window where a registered logs in
 
     def __init__(self,database):
