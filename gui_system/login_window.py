@@ -25,7 +25,7 @@ class LoginWindow(tk.Tk):
         self.database = database
 
         self.title("GUIUniApp - Login")
-        self.geometry("400x260")
+        self.geometry("440x260")
         self.resizable(False,False)
 
         #StringVar objects hold whatever the user types.
@@ -47,10 +47,10 @@ class LoginWindow(tk.Tk):
         #inside the box we use grid. the root window uses pack.
         # that is allowed, because they are different containers.
         email_label = tk.Label(box, text = "Email:")
-        email_label.grid(row=0,column=0,stick="w",pady=5)
+        email_label.grid(row=0,column=0,sticky="w",pady=5)
 
         email_field = tk.Entry(box, textvariable = self.email_text,width = 30)
-        email_field.grid(row = 0, column =0, sticky = "w", pady = 5)
+        email_field.grid(row=0, column=1, pady=5)
 
         email_field.focus()
 

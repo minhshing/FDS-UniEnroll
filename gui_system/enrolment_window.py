@@ -30,7 +30,7 @@ class EnrolmentWindow(tk.Toplevel):
         x_position = parent.winfo_x()
         y_position = parent.winfo_y()
     
-        self.geometry("380x300" + str(x_position)+ "+"+ str(y_position))
+        self.geometry("380x300+" + str(x_position)+ "+"+ str(y_position))
         self.resizable(False,False)
 
         #if the stud closes this window, close the whole app.
@@ -119,7 +119,7 @@ class EnrolmentWindow(tk.Toplevel):
         self.parent.deiconify()
         self.parent.show_message("You have logged out", "green")
         self.destroy()
-        
+
     def handle_close(self):
         #closoing the whole application
         self.parent.destroy()
