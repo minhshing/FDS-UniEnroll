@@ -42,3 +42,18 @@ class StudentIdConstants:
     ID_MIN = 1
     ID_MAX = 999999
     ID_LENGTH = 6
+
+class EnrolmentMenuInputConstants:
+    INPUT_CHANGE_PASSWORD = "c"
+    INPUT_ENROL = "e"
+    INPUT_REMOVE = "r"
+    INPUT_SHOW = "s"
+    INPUT_EXIT = "x"
+
+class SubjectConstants:
+    ID_MIN = 1
+    ID_MAX = 999
+    ID_LENGTH = 3
+    MARK_MIN = 25
+    MARK_MAX = 100
+    MAX_SUBJECTS = 4
