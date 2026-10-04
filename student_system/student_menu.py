@@ -15,11 +15,11 @@ class StudentMenu:
         while True:
             user_input = input("Student system (l/r/x): ")
             if user_input == StudentMenuInputConstants.INPUT_LOGIN:
-                #TODO: implement controller logic for student login
-                pass
+                student = self.controller.login()
+                if student is not None:
+                    self.open_enrolment_menu(student)
             elif user_input == StudentMenuInputConstants.INPUT_REGISTER:
-                #TODO: implement controller logic for student register
-                pass
+                self.controller.register()
             elif user_input == StudentMenuInputConstants.INPUT_EXIT:
                 break
             else:

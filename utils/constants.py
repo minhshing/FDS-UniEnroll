@@ -36,7 +36,8 @@ class PassThresholdConstants:
 
 class StudentValidationConstants:
     EMAIL_PATTERN = r"^[a-zA-Z]+\.[a-zA-Z]+@university\.com$"
-    PASSWORD_PATTERN = r"^[A-Z][a-zA-Z]{5,}[0-9]{3,}$"
+    # upper-case first letter, then at least 5 letters in total, then 3+ digits
+    PASSWORD_PATTERN = r"^[A-Z][a-zA-Z]{4,}[0-9]{3,}$"
 
 class StudentIdConstants:
     ID_MIN = 1

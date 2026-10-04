@@ -1,5 +1,6 @@
 from database.database import Database
 
+from models.subject import calculate_grade
 from utils.constants import MarkThresholdConstants, PassThresholdConstants
 from utils.exception.admin_controller import (ClearDatabaseError,
                                               GroupStudentsError,
@@ -10,12 +11,10 @@ def generate_output_string_from_students(students):
     output_string = ""
 
     for student in students:
-        calculate_average_mark_and_grade(student)
+        average_mark, average_grade = calculate_average_mark_and_grade(student)
 
         name = student["name"]
         id = student["id"]
-        average_mark = student["average_mark"]
-        average_grade = student["average_grade"]
 
         output_string += f"{name} :: {id} --> GRADE: {average_grade} - MARK: {average_mark}, "
 
@@ -23,7 +22,9 @@ def generate_output_string_from_students(students):
     output_string = output_string[:-2]
     return output_string
 
-# return student's average mark as well as add average mark and grade into student obj
+# return the student's average mark and the grade that goes with it.
+# this does not touch the student dict, because get_all_students hands out
+# the live records and anything written here would end up in students.data.
 def calculate_average_mark_and_grade(student):
     subjects = student["subjects"]
 
@@ -32,25 +33,13 @@ def calculate_average_mark_and_grade(student):
         mark = subject["mark"]
         total_mark += mark
 
-    average_mark = total_mark / len(subjects)
-    student["average_mark"] = average_mark
-
-
-    average_grade = ""
-    if average_mark < MarkThresholdConstants.Z_NUMBER:
-        average_grade = MarkThresholdConstants.Z_STRING
-    elif average_mark < MarkThresholdConstants.P_NUMBER:
-        average_grade = MarkThresholdConstants.P_STRING
-    elif average_mark < MarkThresholdConstants.C_NUMBER:
-        average_grade = MarkThresholdConstants.C_STRING
-    elif average_mark < MarkThresholdConstants.D_NUMBER:
-        average_grade = MarkThresholdConstants.D_STRING
+    # a student with no subjects has no marks to average
+    if len(subjects) == 0:
+        average_mark = 0.0
     else:
-        average_grade = MarkThresholdConstants.HD_STRING
+        average_mark = total_mark / len(subjects)
 
-    student["average_grade"] = average_grade
-
-    return average_mark
+    return average_mark, calculate_grade(average_mark)
 
 class AdminController:
     def __init__(self, database: Database):
@@ -80,7 +69,7 @@ class AdminController:
                 hd_students = []
 
                 for student in students:
-                    average_mark = calculate_average_mark_and_grade(student)
+                    average_mark, _ = calculate_average_mark_and_grade(student)
 
                     if average_mark < MarkThresholdConstants.Z_NUMBER:
                         z_students.append(student)
@@ -128,7 +117,7 @@ class AdminController:
             fail_students = []
 
             for student in students:
-                average_mark = calculate_average_mark_and_grade(student)
+                average_mark, _ = calculate_average_mark_and_grade(student)
                 if average_mark < PassThresholdConstants.PASS:
                     fail_students.append(student)
                 else:

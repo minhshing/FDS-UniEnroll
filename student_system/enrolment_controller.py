@@ -45,7 +45,7 @@ class EnrolmentController:
         self.student.subjects.append(new_subject)
 
         #saving this to student.data straight away.
-        self.database.update_student(self.student)
+        self.save_student()
         return new_subject
     
     def remove(self, subject_id):
@@ -67,11 +67,19 @@ class EnrolmentController:
         self.student.subjects.remove(subject_to_remove)
 
         #saving to students.data straight away.
-        self.database.update_student(self.student)
+        self.save_student()
     # changing the students password and saving it.
     def change_password(self, new_password):
         self.student.password = new_password
-        self.database.update_student(self.student)
+        self.save_student()
+
+    def save_student(self):
+        #writing this student back to students.data.
+        #the database stores plain dicts, so the Student has to be
+        #converted first, and it is matched on its id.
+        self.database.update_student(
+            self.student.student_id, self.student.convert_to_file_data()
+        )
 
 
 

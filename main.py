@@ -14,7 +14,7 @@ def main():
     database = Database(filename="students.data")
 
     # Init controllers
-    student_controller = StudentController()
+    student_controller = StudentController(database)
     admin_controller = AdminController(database)
 
     # Init menus
