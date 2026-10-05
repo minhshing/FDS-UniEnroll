@@ -5,24 +5,29 @@
 # registration is not available in the GUI.
 # Only studewnts who already exists in students.data can log in. There are no admin options.
 #layout follows a LabelFrame box, StringVar entries and the grid geometry manager inside the frame.
-import re
 import tkinter as tk
 
-from models.student import Student
 from gui_system.exception_window import ExceptionWindow
 from gui_system.enrolment_window import EnrolmentWindow
-from utils.constants import StudentValidationConstants
+from student_system.enrolment_controller import EnrolmentController
+
+from student_system.student_controller import StudentController
+
+from utils.exception.student_controller import LoginEmailOrPasswordEmptyError, LoginEmailFormatInvalidError, \
+    LoginStudentNotFoundError
 
 
 class LoginWindow(tk.Tk):
     # the main window where a registered logs in
 
-    def __init__(self,database):
+    def __init__(self, student_controller: StudentController, enrolment_controller: EnrolmentController):
         #database: the Database object, the same on the CLI uses,
         #so both applications read the same students.data
 
         super().__init__()
-        self.database = database
+
+        self.student_controller = student_controller
+        self.enrolment_controller = enrolment_controller
 
         self.title("GUIUniApp - Login")
         self.geometry("440x260")
@@ -85,21 +90,28 @@ class LoginWindow(tk.Tk):
         # the email not in correct format
         # no stud with that email and pass exists.
 
-        email = self.email_text.get().strip()
-        password = self.password_text.get()
+        try:
+            email = self.email_text.get().strip()
+            password = self.password_text.get()
 
-        #error 1: empty fields
-        if email == "" or password == "":
+            student = self.student_controller.login_gui(email, password)
+
+            # lecture 10 clears the fields after successful login.
+            self.clear()
+            # hide the login window and open the enrolment window.
+            self.withdraw()
+
+            self.enrolment_controller.student = student
+            EnrolmentWindow(self, self.enrolment_controller)
+
+        except LoginEmailOrPasswordEmptyError:
             self.show_message("Login failed", "red")
             ExceptionWindow(
                 self,
                 "Missing Details",
                 "Please enter both your email and your password.",
             )
-            return
-        
-        #error 2: email format, using the same rule as the CLI
-        if re.match(StudentValidationConstants.EMAIL_PATTERN,email) is None:
+        except LoginEmailFormatInvalidError:
             self.show_message("Login failed", "red")
             ExceptionWindow(
                 self,
@@ -109,13 +121,8 @@ class LoginWindow(tk.Tk):
                 "firstname.lastname@university.com",
             )
             return
-        
-        #error3 : student not found, or wrong password
-
-        
-        record = self.database.get_student_by_email(email)
-        if record is None or record["password"] != password:
-            self.show_message("Login failed","red")
+        except LoginStudentNotFoundError:
+            self.show_message("Login failed", "red")
             ExceptionWindow(
                 self,
                 "Login Failed",
@@ -123,15 +130,6 @@ class LoginWindow(tk.Tk):
                 "Only registered students can use GUIUniApp.",
             )
             return
-        #login worked. the database gives us a dictionary, so turn it
-        # into a Student object before passion it on.
-        student = Student.create_from_file_data(record)
-        
-        # lecture 10 clears the fields after successful login.
-        self.clear()
-        # hide the login window and open the enrolment window.
-        self.withdraw()
-        EnrolmentWindow(self,student,self.database)
 
 #Login worked. the database gives us a dictionary, so turn it
         #into a Student object before passing it on.

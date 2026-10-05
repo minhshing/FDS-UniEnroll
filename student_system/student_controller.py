@@ -2,8 +2,14 @@ import random
 import re
 
 from models.student import Student
+
 from utils.constants import StudentIdConstants, StudentValidationConstants
+
 from utils.exception.database import CreateStudentError
+from utils.exception.student_controller import (LoginGUIError,
+                                                LoginEmailOrPasswordEmptyError,
+                                                LoginEmailFormatInvalidError,
+                                                LoginStudentNotFoundError)
 
 
 class StudentController:
@@ -62,3 +68,21 @@ class StudentController:
             return None
 
         return Student.create_from_file_data(student_data)
+
+    def login_gui(self, email, password):
+        try:
+            if email == "" or password == "":
+                raise LoginEmailOrPasswordEmptyError
+
+            is_email_valid = re.match(StudentValidationConstants.EMAIL_PATTERN, email) is not None
+            if not is_email_valid:
+                raise LoginEmailFormatInvalidError
+
+            student = self.database.get_student_by_email(email)
+            if student is None or student["password"] != password:
+                raise LoginStudentNotFoundError
+
+            return Student.create_from_file_data(student)
+        except Exception as e:
+            print(f"error loging in using GUI: {e}")
+            return LoginGUIError
