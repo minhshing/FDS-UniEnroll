@@ -82,7 +82,7 @@ class StudentController:
             if student is None or student["password"] != password:
                 raise LoginStudentNotFoundError
 
-            return Student.create_from_file_data(student)
+            return Student.create_from_file_data(student), None
         except Exception as e:
             print(f"error loging in using GUI: {e}")
-            return LoginGUIError
+            return None, LoginGUIError

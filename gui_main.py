@@ -15,7 +15,7 @@ def main():
     database = Database(filename="students.data")
 
     student_controller = StudentController(database)
-    enrolment_controller = EnrolmentController(database=database)
+    enrolment_controller = EnrolmentController(None, database=database)
 
     login_window = LoginWindow(student_controller, enrolment_controller)
     login_window.mainloop()

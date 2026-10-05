@@ -94,7 +94,10 @@ class LoginWindow(tk.Tk):
             email = self.email_text.get().strip()
             password = self.password_text.get()
 
-            student = self.student_controller.login_gui(email, password)
+            student, error = self.student_controller.login_gui(email, password)
+            if error is not None:
+                self.show_message("Login failed", "red")
+                raise error
 
             # lecture 10 clears the fields after successful login.
             self.clear()
@@ -105,12 +108,12 @@ class LoginWindow(tk.Tk):
             EnrolmentWindow(self, self.enrolment_controller)
 
         except LoginEmailOrPasswordEmptyError:
-            self.show_message("Login failed", "red")
             ExceptionWindow(
                 self,
                 "Missing Details",
                 "Please enter both your email and your password.",
             )
+            return
         except LoginEmailFormatInvalidError:
             self.show_message("Login failed", "red")
             ExceptionWindow(
@@ -129,6 +132,9 @@ class LoginWindow(tk.Tk):
                 "Incorrect email or password.\n\n"
                 "Only registered students can use GUIUniApp.",
             )
+            return
+        except Exception as e:
+            print(f"error logging in in login window: {e}")
             return
 
 #Login worked. the database gives us a dictionary, so turn it
