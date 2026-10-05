@@ -88,7 +88,7 @@ class EnrolmentMenu:
     def change_password(self):
         #ask for a new pass, check its format, confirm it, then save.
         print(YELLOW + "\t\tUpdating Password" + RESET)
-        new_password = input("\t\tNew Password: ")
+        # new_password = input("\t\tNew Password: ")
         
         # Keep asking for the confirmation until it matches.
         #without this, a stud could set a password they can
