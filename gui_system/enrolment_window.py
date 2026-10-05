@@ -8,6 +8,7 @@
 
 import tkinter as tk
 from student_system.enrolment_controller import EnrolmentController
+
 from utils.exception.enrolment_exceptions import EnrolmentLimitError
 from gui_system.exception_window import ExceptionWindow
 from gui_system.subject_window import SubjectWindow
@@ -15,17 +16,16 @@ from gui_system.subject_window import SubjectWindow
 class EnrolmentWindow(tk.Toplevel):
     #window where a stud enrols in subj
     
-    def __init__(self,parent,student,database):
+    def __init__(self, parent, controller: EnrolmentController):
         #parent: the login window
         #student: the Student object of whoever just logged in
         #database: the Database object, used to save changes
 
         super().__init__(parent)
         self.parent = parent
-        self.student = student
 
         #the same controller the CLI menu uses.
-        self.controller = EnrolmentController(student, database)
+        self.controller = controller
         self.title("GUIUniApp - Enrolment")
         x_position = parent.winfo_x()
         y_position = parent.winfo_y()
@@ -43,12 +43,12 @@ class EnrolmentWindow(tk.Toplevel):
         #create everything the user sees in this window.
         heading = tk.Label(
             self,
-            text="Welcome " + self.student.name,
+            text="Welcome " + self.controller.get_student_name(),
             font=("Arial",14),
         )
         heading.pack(pady=(20,5))
 
-        id_label = tk.Label(self,text="Student ID: "+ str(self.student.student_id))
+        id_label = tk.Label(self,text="Student ID: "+ str(self.controller.get_student_id()))
         id_label.pack()
 
         #show how many subjs out of 4 the stud has.

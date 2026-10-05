@@ -81,6 +81,10 @@ class EnrolmentController:
             self.student.student_id, self.student.convert_to_file_data()
         )
 
+    def get_student_id(self):
+        return self.student.student_id
 
+    def get_student_name(self):
+        return self.student.name
 
 
