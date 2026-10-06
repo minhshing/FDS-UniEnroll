@@ -88,17 +88,17 @@ class EnrolmentMenu:
     def change_password(self):
         #ask for a new pass, check its format, confirm it, then save.
         print(YELLOW + "\t\tUpdating Password" + RESET)
-        new_password = input("\t\tNew Password: ")
-        
-        # Keep asking for the confirmation until it matches.
-        #without this, a stud could set a password they can
-        #never login with, cuz login checks the same rules.
+
+        #keep asking until the password matches the required format.
         while True:
             new_password = input("\t\tNew Password: ")
             if re.match(StudentValidationConstants.PASSWORD_PATTERN,new_password):
                 break
             print(RED + "\t\tIncorrect password format"+RESET)
-        #keep asking for the confirmation until it matches.
+
+        # Keep asking for the confirmation until it matches.
+        #without this, a stud could set a password they can
+        #never login with, cuz login checks the same rules.
         while True:
             confirm_password = input("\t\tConfirm Password: ")
             if confirm_password == new_password:
