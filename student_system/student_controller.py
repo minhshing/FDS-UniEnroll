@@ -11,6 +11,11 @@ from utils.exception.student_controller import (LoginGUIError,
                                                 LoginEmailFormatInvalidError,
                                                 LoginStudentNotFoundError)
 
+# giving some added colour flairs to the terminal to match the sample output.
+RED = "\033[91m"
+YELLOW = "\033[93m"
+RESET = "\033[0m"
+
 
 class StudentController:
     def __init__(self, database):
@@ -27,10 +32,10 @@ class StudentController:
             password = input("\tPassword: ")
 
             if self.is_valid_credentials(email, password):
-                print("\temail and password formats acceptable")
+                print(YELLOW + "\temail and password formats acceptable" + RESET)
                 return email, password
 
-            print("\tIncorrect email or password format")
+            print(RED + "\tIncorrect email or password format" + RESET)
 
     def generate_unique_id(self):
         while True:
