@@ -78,9 +78,12 @@ class StudentController:
         try:
             if email == "" or password == "":
                 raise LoginEmailOrPasswordEmptyError
-
-            is_email_valid = re.match(StudentValidationConstants.EMAIL_PATTERN, email) is not None
-            if not is_email_valid:
+            #prev code for willy
+            # is_email_valid = re.match(StudentValidationConstants.EMAIL_PATTERN, email) is not None
+            # if not is_email_valid:
+                # raise LoginEmailFormatInvalidError
+            #new code for rafeed
+            if re.match(StudentValidationConstants.EMAIL_PATTERN, email) is None:
                 raise LoginEmailFormatInvalidError
 
             student = self.database.get_student_by_email(email)

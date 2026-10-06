@@ -33,7 +33,7 @@ class EnrolmentController:
         #checkin the limit first.
         if self.count_subjects() >= MAX_SUBJECTS:
             raise EnrolmentLimitError (
-                "Students are allowed to enrol in 4 Subjects only."
+                "Students are allowed to enrol in 4 subjects only."
             )
         
         #Collect the ids the studs already has so the new id is different. 

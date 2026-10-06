@@ -24,12 +24,16 @@ def main():
     # Main loop
     while True:
         user_input = input("University System: (A)dmin, (S)tudent, or X : ")
+        #right now typing a or s will print out invalid input
+        #sample uses capital but a tutor testing by hand may not. 
+        #Rafeeds code
+        user_input = user_input.strip().upper()
         if user_input == MainInputConstants.INPUT_STUDENT_SYSTEM:
             student_menu.run()
         elif user_input == MainInputConstants.INPUT_ADMIN_SYSTEM:
             admin_menu.run()
         elif user_input == MainInputConstants.INPUT_EXIT:
-            print("Thank you")
+            print("Thank You")
             break
         else:
             print("Invalid input")
