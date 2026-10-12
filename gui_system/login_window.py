@@ -97,7 +97,15 @@ class LoginWindow(tk.Tk):
 
             # raises a specific error if anything is wrong,
             # otherwise gives back a Student object.
-            student = self.student_controller.login_gui(email, password)
+            # student, error = self.student_controller.login_gui(email, password)
+            # if error is not None:
+            #     self.show_message("Login failed", "red")
+            #     ExceptionWindow(self, "Login Failed", "Incorrect email or password.")
+            #     return
+            
+            student, error = self.student_controller.login_gui(email, password)
+            if error is not None:
+                raise error
 
             # lecture 10 clears the fields after successful login.
             self.clear()

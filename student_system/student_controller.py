@@ -91,6 +91,8 @@ class StudentController:
                 raise LoginStudentNotFoundError
 
             return Student.create_from_file_data(student), None
-        except Exception as e:
-            print(f"error loging in using GUI: {e}")
-            return None, LoginGUIError
+        except (LoginEmailOrPasswordEmptyError,
+                LoginEmailFormatInvalidError,
+                LoginStudentNotFoundError) as e:
+            # send back WHICH error happened, so the window can show the right message
+            return None, e
