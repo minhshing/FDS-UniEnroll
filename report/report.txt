@@ -1,0 +1,13 @@
+Project Contribution:
+Quang Minh Nguyen:
+- Setup project codebase
+- Handle admin menu, student menu, admin controller, database
+- Fix other members bugs, write unittests
+
+Willy Sandi:
+- Handle student controller, student model
+- Fix other members bugs, write unittests
+
+Rafeed Sultan:
+- Handle enrolment controller, subject model, GUI system
+- Fix other member bugs, write unittests
